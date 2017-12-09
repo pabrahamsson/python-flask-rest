@@ -21,14 +21,15 @@ node('master') {
 
 }
 
-node('maven') {
-  def mvnCmd = 'mvn'
-  String pomFileLocation = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
+node('base') {
+  //def mvnCmd = 'mvn'
+  //String pomFileLocation = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
 
   stage('SCM Checkout') {
     checkout scm
   }
 
+  /*
   stage('Build') {
 
     sh "${mvnCmd} clean install -DskipTests=true -f ${pomFileLocation}"
@@ -40,15 +41,12 @@ node('maven') {
      sh "${mvnCmd} test -f ${pomFileLocation}"
 
   }
+  */
 
   stage('Build Image') {
 
     sh """
-      rm -rf oc-build && mkdir -p oc-build/deployments
-      for t in \$(echo "jar;war;ear" | tr ";" "\\n"); do
-        cp -rfv ./target/*.\$t oc-build/deployments/ 2> /dev/null || echo "No \$t files"
-      done
-      ${env.OC_CMD} start-build ${env.APP_NAME} --from-dir=oc-build --wait=true --follow=true || exit 1
+      ${env.OC_CMD} start-build ${env.APP_NAME} --from-dir=. --wait=true --follow=true || exit 1
     """
   }
 
