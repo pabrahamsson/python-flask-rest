@@ -21,7 +21,7 @@ node('master') {
 
 }
 
-node('base') {
+node('jenkins-slave-base') {
   //def mvnCmd = 'mvn'
   //String pomFileLocation = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
 
