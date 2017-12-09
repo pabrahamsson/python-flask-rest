@@ -29,11 +29,13 @@ node('jenkins-slave-base') {
     checkout scm
   }
 
+  /*
   stage('Unit Test') {
 
      sh "python -m unittest discover test -v"
 
   }
+  */
 
   stage('Build Image') {
 
