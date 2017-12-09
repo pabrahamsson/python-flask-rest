@@ -29,19 +29,11 @@ node('jenkins-slave-base') {
     checkout scm
   }
 
-  /*
-  stage('Build') {
-
-    sh "${mvnCmd} clean install -DskipTests=true -f ${pomFileLocation}"
-
-  }
-
   stage('Unit Test') {
 
-     sh "${mvnCmd} test -f ${pomFileLocation}"
+     sh "python -m unittest discover test -v"
 
   }
-  */
 
   stage('Build Image') {
 

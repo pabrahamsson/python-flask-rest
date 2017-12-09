@@ -3,12 +3,14 @@
 from atomiccounter import AtomicCounter
 from flask import Flask
 from flask import Response
+from flask import jsonify
 from flask import request
 from healthcheck import HealthCheck, EnvironmentDump
 import json
 import socket
 
 application = Flask(__name__)
+application.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 health = HealthCheck(application, '/health')
 envdump = EnvironmentDump(application, '/environment')
@@ -51,13 +53,19 @@ def hostinfo():
 
 
 def json_response(message, sort=False):
-    response = Response(
-            json.dumps(message, separators=(',', ':'), sort_keys=sort),
-            status=200,
-            mimetype='applicationlication/json')
+    """
+    response = jsonify(
+            json.dumps(
+                message,
+                separators=(',', ':'),
+                sort_keys=sort
+                )
+            )
+    """
+    response = jsonify(message)
+    response.status_code=200
     return response
 
 
 if __name__ == '__main__':
-    #application.run(host='0.0.0.0', port=8080)
     application.run()
