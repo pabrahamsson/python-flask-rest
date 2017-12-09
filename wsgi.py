@@ -4,10 +4,14 @@ from atomiccounter import AtomicCounter
 from flask import Flask
 from flask import Response
 from flask import request
+from healthcheck import HealthCheck, EnvironmentDump
 import json
 import socket
 
 application = Flask(__name__)
+
+health = HealthCheck(application, '/health')
+envdump = EnvironmentDump(application, '/environment')
 
 counter = AtomicCounter()
 paths = [ "/", "/greeting", "/hostinfo" ]
