@@ -13,7 +13,7 @@ application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 health = HealthCheck(application, '/health')
-envdump = EnvironmentDump(application, '/environment')
+envdump = EnvironmentDump(application, '/environment', include_process=False)
 
 counter = AtomicCounter()
 paths = [ "/", "/greeting", "/hostinfo" ]
