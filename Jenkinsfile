@@ -19,6 +19,7 @@ node('master') {
   env.STAGE2 = "${projectBase}-stage"
   env.STAGE3 = "${projectBase}-prod"
 
+  /*
 }
 
 node('jenkins-slave-base') {
@@ -29,7 +30,6 @@ node('jenkins-slave-base') {
     checkout scm
   }
 
-  /*
   stage('Unit Test') {
 
      sh "python -m unittest discover test -v"
