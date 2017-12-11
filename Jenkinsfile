@@ -26,11 +26,13 @@ node('master') {
 node('jenkins-slave-base') {
   //def mvnCmd = 'mvn'
   //String pomFileLocation = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
+  */
 
   stage('SCM Checkout') {
     checkout scm
   }
 
+  /*
   stage('Unit Test') {
 
      sh "python -m unittest discover test -v"
