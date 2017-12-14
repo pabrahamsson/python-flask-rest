@@ -20,25 +20,20 @@ node('master') {
   env.STAGE2 = "${projectBase}-stage"
   env.STAGE3 = "${projectBase}-prod"
 
-  /*
 }
 
-node('jenkins-slave-base') {
-  //def mvnCmd = 'mvn'
-  //String pomFileLocation = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
-  */
-
+node('python') {
   stage('SCM Checkout') {
     checkout scm
   }
 
-  /*
   stage('Unit Test') {
-
-     sh "python -m unittest discover test -v"
-
+     sh "python -V"
+     sh "which python"
+     sh "virtualenv ${env.APP_NAME}"
+     sh "${env.APP_NAME}/bin/pip install -r requirements.txt"
+     sh "${env.APP_NAME}/bin/python -m unittest discover test -v"
   }
-  */
 
   stage('Build Image') {
 
