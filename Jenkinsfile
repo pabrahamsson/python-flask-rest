@@ -13,8 +13,7 @@ node('master') {
   env.TOKEN = readFile('/var/run/secrets/kubernetes.io/serviceaccount/token').trim()
   env.OC_CMD = "oc --token=${env.TOKEN} --server=${ocpApiServer} --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --namespace=${env.NAMESPACE}"
 
-  env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '')
-  //def projectBase = "${env.NAMESPACE}".replaceAll(/-dev/, '')
+  env.APP_NAME = env.JOB_NAME.replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '')
   def projectBase = env.NAMESPACE.replace(/-build/, '')
   env.STAGE1 = "${projectBase}-dev"
   env.STAGE2 = "${projectBase}-stage"
@@ -28,11 +27,8 @@ node('python') {
   }
 
   stage('Unit Test') {
-     sh "python -V"
-     sh "which python"
-     sh "virtualenv ${env.APP_NAME}"
-     sh "${env.APP_NAME}/bin/pip install -r requirements.txt"
-     sh "${env.APP_NAME}/bin/python -m unittest discover test -v"
+     sh "pip install --user -r requirements.txt"
+     sh "python -m unittest discover test -v"
   }
 
   stage('Build Image') {
