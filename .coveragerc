@@ -1,0 +1,5 @@
+[run]
+omit = 
+    atomiccounter.py
+    config.py
+    test/*

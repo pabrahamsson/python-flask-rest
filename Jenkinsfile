@@ -27,8 +27,12 @@ node('python') {
   }
 
   stage('Unit Test') {
-     sh "pip install --user -r requirements.txt"
-     sh "python -m unittest discover test -v"
+    sh "pip install --user -r requirements.txt"
+    sh "coverage run --source=. -m unittest discover -v -s test"
+  }
+
+  stage('Generate coverage report') {
+    sh "coverage html"
   }
 
   stage('Build Image') {
