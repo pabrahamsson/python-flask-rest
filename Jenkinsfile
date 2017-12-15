@@ -28,11 +28,11 @@ node('python') {
 
   stage('Unit Test') {
     sh "pip install --user -r requirements.txt"
-    sh "coverage run --source=. -m unittest discover -v -s test"
+    sh "python -m coverage run --source=. -m unittest discover -v -s test"
   }
 
   stage('Generate coverage report') {
-    sh "coverage html"
+    sh "python -m coverage html"
   }
 
   stage('Build Image') {
