@@ -28,13 +28,16 @@ node('python') {
 
   stage('Unit Test') {
     sh "pip install --user -r requirements.txt"
-    sh "python -m coverage run --source=. -m unittest discover -v -s test"
     sh "nosetests --with-xunit --with-coverage --cover-test --cover-package=wsgi --cover-erase -v"
   }
 
   stage('Generate coverage report') {
     sh "python -m coverage xml"
     cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+  }
+
+  stage('SonarQube Analysis') {
+    sh "sonar-scanner -Dsonar.host.url=http://${SONARQUBE_SERVICE_HOST}:${SONARQUBE_SERVICE_PORT}"
   }
 
   stage('Build Image') {
