@@ -29,6 +29,7 @@ node('python') {
   stage('Unit Test') {
     sh "pip install --user -r requirements.txt"
     sh "python -m coverage run --source=. -m unittest discover -v -s test"
+    sh "nosetests --with-xunit --with-coverage --cover-test --cover-package=wsgi --cover-erase -v"
   }
 
   stage('Generate coverage report') {

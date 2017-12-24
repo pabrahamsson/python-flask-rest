@@ -1,5 +1,7 @@
-coverage
-flask
-gunicorn
-healthcheck
-six
+## The following requirements were added by pip freeze:
+coverage==4.4.2
+Flask==0.12.2
+gunicorn==19.7.1
+healthcheck==1.3.2
+nose==1.3.7
+six==1.11.0
