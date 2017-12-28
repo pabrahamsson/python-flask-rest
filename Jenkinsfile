@@ -37,7 +37,7 @@ node('python') {
   }
 
   stage('SonarQube Analysis') {
-    sh "sonar-scanner -Dsonar.host.url=http://${SONARQUBE_SERVICE_HOST}:${SONARQUBE_SERVICE_PORT}"
+    sh "unset JAVA_TOOL_OPTIONS && sonar-scanner -Dsonar.host.url=http://${SONARQUBE_SERVICE_HOST}:${SONARQUBE_SERVICE_PORT}"
   }
 
   stage('Build Image') {
