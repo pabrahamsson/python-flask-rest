@@ -1,0 +1,59 @@
+swagger: '2.0'
+info:
+  description: A sample REST API to demonstrate Python Flask/Connexion applications in Openshift.
+  license:
+    name: Apache License Version 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  title: Openshift uncontained.io sample Python REST API
+  version: '1.0'
+basePath: /v1
+paths:
+  /:
+    get:
+      operationId: api.root.class_instance.get
+      responses:
+        '301':
+          description: Redirect to Swagger UI
+  /greeting:
+    get:
+      operationId: api.greeting.class_instance.get
+      parameters:
+        - name: name
+          in: query
+          required: false
+          type: string
+          default: World
+      responses:
+        '200':
+          description: Generate a greeting for a given name
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Greeting'
+  /hostinfo:
+    get:
+      operationId: api.hostinfo.class_instance.get
+      responses:
+        '200':
+          description: List hostname running the sample application
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Hostinfo'
+definitions:
+  Greeting:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      content:
+        type: string
+  Hostinfo:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      hostname:
+        type: string
